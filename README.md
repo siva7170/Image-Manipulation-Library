@@ -23,3 +23,45 @@ include("ImageManipulation.class.php");
 $image=new ImageManipulation();
 ```
 
+## Usage
+
+Below code is sample for how to use it. Please see methods and its functionalities below sections.
+
+```php
+include("ImageManipulation.class.php");
+
+$image=new ImageManipulation();
+$image->ImageFrom("image.png");
+$image->ImageType(ImageManipulation::IMAGE_TYPE_GIF);
+$image->ImagePreserverTransparent(true);
+$image->ImageManipulationAction(ImageManipulation::IMAGE_ACTION_FILL);
+$image->ImageQuality(80);
+$image->ImageResize(1000,1000);
+$image->WorkSpaceColor(0,255,0);
+$image->Output("../image.gif");
+```
+
+## Methods
+
+### ImageFrom
+
+We should pass path of image into this method
+
+```php
+$image->ImageFrom("image.png");
+```
+
+### ImageType
+
+We may set the file type either PNG or GIF or JPG. This image library will convert the image type to this type.
+
+```php
+$image->ImageType(ImageManipulation::IMAGE_TYPE_GIF);
+```
+
+**Available options:**
+
+* ImageManipulation::IMAGE_TYPE_GIF
+* ImageManipulation::IMAGE_TYPE_JPG
+* ImageManipulation::IMAGE_TYPE_JPEG
+* ImageManipulation::IMAGE_TYPE_PNG
