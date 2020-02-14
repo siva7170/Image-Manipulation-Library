@@ -95,7 +95,7 @@ $image->ImageResize(1000,1000);
 
 ### ImageQuality
 
-We may also set image quality. Based on this image quality value, final image output will be generated
+We may also set image quality. Based on this image quality value, final image output will be generated. Please pass between 0 to 100 for JPEG; Pass 0 to 9 for PNG
 
 Note: There is no quality option provided for GIF image output.
 
@@ -107,7 +107,7 @@ $image->ImageResize(1000,1000);
 
 ### ImagePreserverTransparent
 
-If you use final file type is PNG/GIF, the you may set this option to preserve the transparency of the image
+If you use final file type is PNG/GIF, the you may set this option to preserve the transparency of the image. Please set either TRUE or FALSE
 
 > Default: true (For GIF <=> PNG )
 
