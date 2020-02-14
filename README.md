@@ -59,9 +59,60 @@ We may set the file type either PNG or GIF or JPG. This image library will conve
 $image->ImageType(ImageManipulation::IMAGE_TYPE_GIF);
 ```
 
+> Default: ImageManipulation::IMAGE_TYPE_JPG
+
 **Available options:**
 
 * ImageManipulation::IMAGE_TYPE_GIF
 * ImageManipulation::IMAGE_TYPE_JPG
 * ImageManipulation::IMAGE_TYPE_JPEG
 * ImageManipulation::IMAGE_TYPE_PNG
+
+### ImageManipulationAction
+
+We may set the image manipulation action here. This library has four actions. The output of the image will be based on this action selection
+
+```php
+$image->ImageManipulationAction(ImageManipulation::IMAGE_ACTION_FILL);
+```
+
+> Default: ImageManipulation::IMAGE_ACTION_FILL
+
+**Available options:**
+
+* ImageManipulation::IMAGE_ACTION_FIT
+* ImageManipulation::IMAGE_ACTION_FILL
+* ImageManipulation::IMAGE_ACTION_CENTER
+* ImageManipulation::IMAGE_ACTION_STRETCH
+
+### ImageResize
+
+This method used to specify the image width & height.
+
+```php
+$image->ImageResize(1000,1000);
+```
+
+### ImageQuality
+
+We may also set image quality. Based on this image quality value, final image output will be generated
+
+Note: There is no quality option provided for GIF image output.
+
+> Default: 90 for JPEG; 8 for PNG
+
+```php
+$image->ImageResize(1000,1000);
+```
+
+### ImageQuality
+
+We may also set image quality. Based on this image quality value, final image output will be generated
+
+Note: There is no quality option provided for GIF image output.
+
+> Default: 90 for JPEG; 8 for PNG
+
+```php
+$image->ImageResize(1000,1000);
+```
