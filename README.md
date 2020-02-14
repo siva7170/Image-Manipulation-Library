@@ -105,14 +105,38 @@ Note: There is no quality option provided for GIF image output.
 $image->ImageResize(1000,1000);
 ```
 
-### ImageQuality
+### ImagePreserverTransparent
 
-We may also set image quality. Based on this image quality value, final image output will be generated
+If you use final file type is PNG/GIF, the you may set this option to preserve the transparency of the image
 
-Note: There is no quality option provided for GIF image output.
-
-> Default: 90 for JPEG; 8 for PNG
+> Default: true (For GIF <=> PNG )
 
 ```php
-$image->ImageResize(1000,1000);
+$image->ImagePreserverTransparent(true);
+```
+
+### WorkSpaceColor
+
+This is workspace color. You can see this color on ImageManipulation::IMAGE_ACTION_FIT.
+
+> Default: 255,255,255
+
+```php
+$image->WorkSpaceColor(0,255,0);
+```
+
+### Output
+
+This will execute final process of this image library. It will automatically generate image based on all values given to this library and default values. If you want to show final output to browser, please leave this parameter to empty. Otherwise, please specify the path to write on disk.
+
+> Default: (empty)
+
+```php
+$image->Output("../img1.gif"); // It will write image on disk
+```
+
+Or
+
+```php
+$image->Output(); // It will show image on browser directly
 ```
