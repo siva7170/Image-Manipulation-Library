@@ -8,7 +8,7 @@
  * usage.
  *
  * @author Siva Perumal <siva7170430@gmail.com>
- * @author Selva Vigensh <selvavignesh128@gmail.com>
+ * @author Selva Vignesh <selvavignesh128@gmail.com>
  * @version 1.0
  * @license Open Source
  */
