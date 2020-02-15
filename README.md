@@ -43,7 +43,7 @@ $image->Output("../image.gif");
 
 ## Methods
 
-### ImageFrom(file_from) (required)
+### ImageFrom(file_from)
 
 - **file_from**:
   - Type: `String`
@@ -58,14 +58,13 @@ $image->ImageFrom("image.png");
 
 - **file_type**:
   - Type: `String`
+  - Default: ImageManipulation::IMAGE_TYPE_JPG
 
 We may set the file type either PNG or GIF or JPG. This image library will convert the image type to this type.
 
 ```php
 $image->ImageType(ImageManipulation::IMAGE_TYPE_GIF);
 ```
-
-> Default: ImageManipulation::IMAGE_TYPE_JPG
 
 **Available options:**
 
@@ -78,14 +77,13 @@ $image->ImageType(ImageManipulation::IMAGE_TYPE_GIF);
 
 - **file_action**:
   - Type: `String`
+  - Default: ImageManipulation::IMAGE_ACTION_FILL
   
 We may set the image manipulation action here. This library has four actions. The output of the image will be based on this action selection
 
 ```php
 $image->ImageManipulationAction(ImageManipulation::IMAGE_ACTION_FILL);
 ```
-
-> Default: ImageManipulation::IMAGE_ACTION_FILL
 
 **Available options:**
 
@@ -94,7 +92,7 @@ $image->ImageManipulationAction(ImageManipulation::IMAGE_ACTION_FILL);
 * ImageManipulation::IMAGE_ACTION_CENTER
 * ImageManipulation::IMAGE_ACTION_STRETCH
 
-### ImageResize(file_resize_width, file_resize_height) (required)
+### ImageResize(file_resize_width, file_resize_height)
 
 - **file_resize_width**:
   - Type: `Integer`
@@ -112,12 +110,11 @@ $image->ImageResize(1000,1000);
 
 - **file_quality**:
   - Type: `Integer`
-
+  - Default: 90 for JPEG; 8 for PNG
+  
 We may also set image quality. Based on this image quality value, final image output will be generated. Please pass between 0 to 100 for JPEG; Pass 0 to 9 for PNG
 
 Note: There is no quality option provided for GIF image output.
-
-> Default: 90 for JPEG; 8 for PNG
 
 ```php
 $image->ImageQuality(80);
@@ -127,10 +124,9 @@ $image->ImageQuality(80);
 
 - **transparent**:
   - Type: `Boolean`
-
+  - Default: true (For GIF <=> PNG )
+  
 If you use final file type is PNG/GIF, the you may set this option to preserve the transparency of the image. Please set either TRUE or FALSE
-
-> Default: true (For GIF <=> PNG )
 
 ```php
 $image->ImagePreserverTransparent(true);
@@ -140,16 +136,17 @@ $image->ImagePreserverTransparent(true);
 
 - **red**:
   - Type: `Integer`
+  - Default: 255
 
 - **green**:
   - Type: `Integer`
-
+  - Default: 255
+  
 - **blue**:
   - Type: `Integer`
+  - Default: 255
   
 This is workspace color. You can see this color on ImageManipulation::IMAGE_ACTION_FIT.
-
-> Default: 255,255,255
 
 ```php
 $image->WorkSpaceColor(0,255,0);
@@ -157,9 +154,10 @@ $image->WorkSpaceColor(0,255,0);
 
 ### Output([output])
 
-This will execute final process of this image library. It will automatically generate image based on all values given to this library and default values. If you want to show final output to browser, please leave this parameter to empty. Otherwise, please specify the path to write on disk.
+- **output** (optional):
+  - Type: `String`
 
-> Default: (empty)
+This will execute final process of this image library. It will automatically generate image based on all values given to this library and default values. If you want to show final output to browser, please leave this parameter to empty. Otherwise, please specify the path to write on disk.
 
 ```php
 $image->Output("../img1.gif"); // It will write image on disk
