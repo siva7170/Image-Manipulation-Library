@@ -58,7 +58,7 @@ $image->ImageFrom("image.png");
 
 - **file_type**:
   - Type: `String`
-  - Default: ImageManipulation::IMAGE_TYPE_JPG
+  - Default: `ImageManipulation::IMAGE_TYPE_JPG`
 
 We may set the file type either PNG or GIF or JPG. This image library will convert the image type to this type.
 
@@ -77,7 +77,7 @@ $image->ImageType(ImageManipulation::IMAGE_TYPE_GIF);
 
 - **file_action**:
   - Type: `String`
-  - Default: ImageManipulation::IMAGE_ACTION_FILL
+  - Default: `ImageManipulation::IMAGE_ACTION_FILL`
   
 We may set the image manipulation action here. This library has four actions. The output of the image will be based on this action selection
 
@@ -110,7 +110,7 @@ $image->ImageResize(1000,1000);
 
 - **file_quality**:
   - Type: `Integer`
-  - Default: 90 for JPEG; 8 for PNG
+  - Default: `90` for JPEG; `8` for PNG
   
 We may also set image quality. Based on this image quality value, final image output will be generated. Please pass between 0 to 100 for JPEG; Pass 0 to 9 for PNG
 
@@ -124,7 +124,7 @@ $image->ImageQuality(80);
 
 - **transparent**:
   - Type: `Boolean`
-  - Default: true (For GIF <=> PNG )
+  - Default: `true` (For GIF <=> PNG )
   
 If you use final file type is PNG/GIF, the you may set this option to preserve the transparency of the image. Please set either TRUE or FALSE
 
@@ -136,15 +136,15 @@ $image->ImagePreserverTransparent(true);
 
 - **red**:
   - Type: `Integer`
-  - Default: 255
+  - Default: `255`
 
 - **green**:
   - Type: `Integer`
-  - Default: 255
+  - Default: `255`
   
 - **blue**:
   - Type: `Integer`
-  - Default: 255
+  - Default: `255`
   
 This is workspace color. You can see this color on ImageManipulation::IMAGE_ACTION_FIT.
 
