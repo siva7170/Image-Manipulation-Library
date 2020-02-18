@@ -8,7 +8,7 @@
  * usage.
  *
  * @author Siva Perumal <siva7170430@gmail.com>
- * @author Selva Vignesh <selvavignesh128@gmail.com>
+ * @author Selva Vigensh <selvavignesh128@gmail.com>
  * @version 1.0
  * @license Open Source
  */
@@ -125,7 +125,7 @@ class ImageManipulation{
                 $temp_array=[self::IMAGE_TYPE_GIF,self::IMAGE_TYPE_JPEG,self::IMAGE_TYPE_PNG];
                 if(in_array($this->original_filetype,$temp_array)){
                     $this->result=true;
-                    $this->msg="File is found!";
+                    $this->msg="Input file is found!";
                 }
                 else{
                     $this->result=false;
@@ -296,11 +296,44 @@ class ImageManipulation{
      * Default: (empty)
      *
      * @param string $output (Optional) If you want to show final output to browser, please leave this parameter to empty. Otherwise, please specify the path to write on disk.
+     * @param bool $file_overwrite (Optional) If true, file will be overwritten. If no, file will not overwrite but error will show at the end.
      */
-    public function Output($output=""){
+    public function Output($output="",$file_overwrite=true){
         $this->proc_filepath=$output;
-        $this->calculation();
-        $this->ImageProceedAndOutput();
+        if($this->result!=false){
+            if($this->proc_filepath!=""){
+                $outputPath=pathinfo($this->proc_filepath, PATHINFO_DIRNAME);
+                if(file_exists($outputPath)){
+                    $this->result=true;
+                    $this->msg="Input file is found. Output path is found";
+                    if(file_exists($this->proc_filepath) && !$file_overwrite){
+                        $this->result=false;
+                        $this->msg="Input file is found. ";
+                    }
+                    elseif(file_exists($this->proc_filepath) && $file_overwrite){
+                        $this->result=true;
+                        $this->msg="Input file is found. Output path is found and there is file exist with this name. So, it will overwrite that file.";
+                    }
+                    else{
+                        $this->result=true;
+                        $this->msg="Input file is found. Output path is found and there is no file with this name.";
+                    }
+                }
+                else{
+                    $this->result=false;
+                    $this->msg="Input file is found. ";
+                }
+            }
+            else{
+                $this->result=true;
+                $this->msg="Input file is found. Output path is not specified.";
+            }
+
+            if($this->result!=false){
+                $this->calculation();
+                $this->ImageProceedAndOutput();
+            }
+        }
     }
 
     /**
