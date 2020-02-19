@@ -152,12 +152,28 @@ This is workspace color. You can see this color on ImageManipulation::IMAGE_ACTI
 $image->WorkSpaceColor(0,255,0);
 ```
 
-### Output([output])
+### IsOkay() (optional)
+  
+This method will return the status of the functionality whether is going good or not.
+
+```php
+$imageProcessStatus=$image->IsOkay();
+echo "Process Status: ".(($imageProcessStatus[0])?"OK":"Error")."<br/>";
+echo "Process Status Message: ".$imageProcessStatus[1];
+```
+
+### Output([output[, file_overwrite]])
 
 - **output** (optional):
   - Type: `String`
-
+  - Default: `(empty)`
+- **file_overwrite** (optional):
+  - Type: `Boolean`
+  - Default: `true`
+  
 This will execute final process of this image library. It will automatically generate image based on all values given to this library and default values. If you want to show final output to browser, please leave this parameter to empty. Otherwise, please specify the path to write on disk.
+
+In default, "file overwrite" is true. In that case, if file is already exist with output filename, then file will be overwritten. Otherwise, file will not overwrite but error will show in "IsOkay()".
 
 ```php
 $image->Output("../img1.gif"); // It will write image on disk
@@ -167,4 +183,10 @@ Or
 
 ```php
 $image->Output(); // It will show image on browser directly
+```
+
+Or
+
+```php
+$image->Output("../img1.gif",false); // with "file_overwrite" = false
 ```
