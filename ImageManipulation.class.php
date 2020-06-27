@@ -50,12 +50,13 @@ class ImageManipulation{
     private $proc_filequality="";  //  in percentage
     private $proc_filepath="";
 
-    // image file processed/processing workspace (whitepaper)
+    // image file processed/processing workspace (white paper)
 
     private $whitepaper_width="";
     private $whitepaper_height="";
     private $whitepaper_aspect_ratio="";
     private $whitepaper_color=[255,255,255];
+    private $transparency_color=[0,0,0,0];
 
     // some constant
 
@@ -121,6 +122,9 @@ class ImageManipulation{
                         $this->original_filetype=self::IMAGE_TYPE_PNG;
                         $this->proc_filequality=8;
                         break;
+                    default:
+                        $this->result=false;
+                        $this->msg="Unsupported MIME types!";
                 }
                 $temp_array=[self::IMAGE_TYPE_GIF,self::IMAGE_TYPE_JPEG,self::IMAGE_TYPE_PNG];
                 if(in_array($this->original_filetype,$temp_array)){
@@ -215,7 +219,7 @@ class ImageManipulation{
     /**
      *
      */
-    public function calculation(){
+    private function calculation(){
         list($this->original_filewidth, $this->original_fileheight)=getimagesize($this->file_from);
         $sw=$this->original_filewidth;
         $sh=$this->original_fileheight;
@@ -297,6 +301,7 @@ class ImageManipulation{
      *
      * @param string $output (Optional) If you want to show final output to browser, please leave this parameter to empty. Otherwise, please specify the path to write on disk.
      * @param bool $file_overwrite (Optional) If true, file will be overwritten. If no, file will not overwrite but error will show at the end.
+     * @throws Exception When image class does not meet sufficient to proceed next, we will throw that issue/missing requirement.
      */
     public function Output($output="",$file_overwrite=true){
         $this->proc_filepath=$output;
@@ -318,10 +323,36 @@ class ImageManipulation{
                         $this->result=true;
                         $this->msg="Input file is found. Output path is found and there is no file with this name.";
                     }
+                    if($this->proc_filewidth<1){
+                        $this->result=false;
+                        $this->msg="Output file width should have at least 1 or more pixels length";
+                    }
+                    if($this->proc_fileheight<1){
+                        $this->result=false;
+                        $this->msg="Output file height should have at least 1 or more pixels length";
+                    }
+                    if($this->proc_fileheight<1){
+                        $this->result=false;
+                        $this->msg="Output file height should have at least 1 or more pixels length";
+                    }
+                    if($this->original_filetype==self::IMAGE_TYPE_JPEG){
+                        if($this->proc_filequality>100 && $this->proc_filequality<0)
+                        {
+                            $this->result=false;
+                            $this->msg="JPEG image quality should be range between 0 to 100";
+                        }
+                    }
+                    if($this->original_filetype==self::IMAGE_TYPE_PNG){
+                        if($this->proc_filequality>9 && $this->proc_filequality<0)
+                        {
+                            $this->result=false;
+                            $this->msg="PNG image quality should be range between 0 to 9";
+                        }
+                    }
                 }
                 else{
                     $this->result=false;
-                    $this->msg="Input file is found. ";
+                    $this->msg="Input file is found.";
                 }
             }
             else{
@@ -333,13 +364,16 @@ class ImageManipulation{
                 $this->calculation();
                 $this->ImageProceedAndOutput();
             }
+            else{
+                throw new Exception($this->msg);
+            }
         }
     }
 
     /**
      *
      */
-    public function ImageProceedAndOutput(){
+    private function ImageProceedAndOutput(){
         $dstimage=imagecreatetruecolor($this->proc_filewidth,$this->proc_fileheight);
 
         if(!$this->image_transparent || $this->original_filetype!=self::IMAGE_TYPE_PNG){
@@ -351,13 +385,18 @@ class ImageManipulation{
             case self::IMAGE_TYPE_PNG:
                 $srcimage=imagecreatefrompng($this->file_from);
                 if($this->image_transparent){
-                    imagecolortransparent($dstimage, imagecolorallocatealpha($dstimage, 0, 0, 0, 127));
+                    imagecolortransparent($dstimage, imagecolorallocatealpha($dstimage, $this->transparency_color[0], $this->transparency_color[1], $this->transparency_color[2], $this->transparency_color[3]));
                     imagealphablending($dstimage, false);
                     imagesavealpha($dstimage, true);
                 }
                 break;
             case self::IMAGE_TYPE_JPEG:
                 $srcimage=imagecreatefromjpeg($this->file_from);
+                if($this->image_transparent){
+                    imagecolortransparent($dstimage, imagecolorallocatealpha($dstimage, $this->transparency_color[0], $this->transparency_color[1], $this->transparency_color[2], $this->transparency_color[3]));
+                    imagealphablending($dstimage, false);
+                    imagesavealpha($dstimage, true);
+                }
                 break;
             case self::IMAGE_TYPE_GIF:
                 $srcimage=imagecreatefromgif($this->file_from);
@@ -409,5 +448,17 @@ class ImageManipulation{
      */
     public function WorkSpaceColor($red, $green, $blue){
         $this->whitepaper_color=[$red,$green,$blue];
+    }
+
+    /**
+     * This is transparency color of PNG or GIF images.
+     *
+     * @param int $red Specify color value from 0 to 255
+     * @param int $green Specify color value from 0 to 255
+     * @param int $blue Specify color value from 0 to 255
+     * @param int $alpha Specify alpha/opacity value from 0 to 255
+     */
+    public function TransparencyColor($red, $green, $blue,$alpha){
+        $this->transparency_color=[$red,$green,$blue,$alpha];
     }
 }
