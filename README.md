@@ -132,6 +132,34 @@ If you use final file type is PNG/GIF, the you may set this option to preserve t
 $image->ImagePreserverTransparent(true);
 ```
 
+### TransparencyColor(red, green, blue, alpha) (optional)
+
+- **red**:
+  - Type: `Integer`
+  - Default: `0`
+  - Range: `0` to `255`
+
+- **green**:
+  - Type: `Integer`
+  - Default: `0`
+  - Range: `0` to `255`
+  
+- **blue**:
+  - Type: `Integer`
+  - Default: `0`
+  - Range: `0` to `255`
+    
+- **alpha**:
+  - Type: `Integer`
+  - Default: `127`
+  - Range: `0` to `127`
+  
+This is transparency color of PNG or GIF images.
+
+```php
+$image->TransparencyColor(255,255,255,127);
+```
+
 ### WorkSpaceColor(red, green, blue) (optional)
 
 - **red**:

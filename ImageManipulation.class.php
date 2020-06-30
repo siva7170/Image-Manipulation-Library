@@ -56,7 +56,7 @@ class ImageManipulation{
     private $whitepaper_height="";
     private $whitepaper_aspect_ratio="";
     private $whitepaper_color=[255,255,255];
-    private $transparency_color=[0,0,0,0];
+    private $transparency_color=[0,0,0,127];
 
     // some constant
 
@@ -93,6 +93,7 @@ class ImageManipulation{
         $this->manipulation_action=self::IMAGE_ACTION_FILL;
         $this->result=false;
         $this->whitepaper_color=[255,255,255];
+        $this->transparency_color=[0,0,0,127];
         $this->msg="Please select image file path/URL!";
     }
 
@@ -336,14 +337,14 @@ class ImageManipulation{
                         $this->msg="Output file height should have at least 1 or more pixels length";
                     }
                     if($this->original_filetype==self::IMAGE_TYPE_JPEG){
-                        if($this->proc_filequality>100 && $this->proc_filequality<0)
+                        if($this->proc_filequality>100 || $this->proc_filequality<0)
                         {
                             $this->result=false;
                             $this->msg="JPEG image quality should be range between 0 to 100";
                         }
                     }
                     if($this->original_filetype==self::IMAGE_TYPE_PNG){
-                        if($this->proc_filequality>9 && $this->proc_filequality<0)
+                        if($this->proc_filequality>9 || $this->proc_filequality<0)
                         {
                             $this->result=false;
                             $this->msg="PNG image quality should be range between 0 to 9";
@@ -385,21 +386,23 @@ class ImageManipulation{
             case self::IMAGE_TYPE_PNG:
                 $srcimage=imagecreatefrompng($this->file_from);
                 if($this->image_transparent){
-                    imagecolortransparent($dstimage, imagecolorallocatealpha($dstimage, $this->transparency_color[0], $this->transparency_color[1], $this->transparency_color[2], $this->transparency_color[3]));
-                    imagealphablending($dstimage, false);
+                    $transparent=imagecolorallocatealpha($dstimage, $this->transparency_color[0], $this->transparency_color[1], $this->transparency_color[2], $this->transparency_color[3]);
+                    imagefill($dstimage,0,0,$transparent);
                     imagesavealpha($dstimage, true);
+                    imagealphablending($dstimage, true);
                 }
                 break;
             case self::IMAGE_TYPE_JPEG:
                 $srcimage=imagecreatefromjpeg($this->file_from);
-                if($this->image_transparent){
-                    imagecolortransparent($dstimage, imagecolorallocatealpha($dstimage, $this->transparency_color[0], $this->transparency_color[1], $this->transparency_color[2], $this->transparency_color[3]));
-                    imagealphablending($dstimage, false);
-                    imagesavealpha($dstimage, true);
-                }
                 break;
             case self::IMAGE_TYPE_GIF:
                 $srcimage=imagecreatefromgif($this->file_from);
+                if($this->image_transparent){
+                    $transparent=imagecolorallocatealpha($dstimage, $this->transparency_color[0], $this->transparency_color[1], $this->transparency_color[2], $this->transparency_color[3]);
+                    imagefill($dstimage,0,0,$transparent);
+                    imagesavealpha($dstimage, true);
+                    imagealphablending($dstimage, false);
+                }
                 break;
         }
 
