@@ -92,6 +92,8 @@ $image->ImageManipulationAction(ImageManipulation::IMAGE_ACTION_FILL);
 * ImageManipulation::IMAGE_ACTION_CENTER
 * ImageManipulation::IMAGE_ACTION_STRETCH
 
+![Output images types](./resized_types.jpg?raw=true "Resized types")
+
 ### ImageResize(file_resize_width, file_resize_height)
 
 - **file_resize_width**:
